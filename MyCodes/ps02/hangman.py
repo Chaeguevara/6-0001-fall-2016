@@ -113,7 +113,11 @@ def get_available_letters(letters_guessed):
     return guess_letters
 
 
-
+def is_word_correct(user_input, secret_word):
+    for letter in secret_word:
+        if user_input == letter:
+            return True
+    return False
 
 
 def hangman(secret_word):
@@ -142,49 +146,78 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # number of guesses at the start.
-    guesscount = 6
-    warnings = 3
+    guesses_remaining = 6
+    warnings_remaining = 3
     letters_guessed = []
     print("Welcome to the game Hangman! \n" +
           "I am thinking of a word that is " + str(len(secret_word)) + " letters long.\n" +
-          "-------------\n" +
-          "You have " + str(guesscount) + " guesses left.")
+          "-------------")
 
-    print("Available letters: " + get_available_letters(letters_guessed))
-
-    print("Hi: " + get_guessed_word(secret_word, letters_guessed))
-    while (guesscount >= 0):
+    while (guesses_remaining >= 0):
+        print("You have " + str(guesses_remaining) + " guesses left.")
+        print("Available letters: " + get_available_letters(letters_guessed))
         '''
         Validate input whether 
         1. it is alphabet
         2. it is already guessed
         and if not valid -1 warnings when warning reached 3, -1 guesses
         '''
-        #validate input
+
+        # validate input
         user_input = input("Please guess a letter: ")
         # case 1. is alphabet
-        if str.isalpha(user_input) != True:
-            print("The letter need to be alphabet")
-            print("You have " + str(warnings) + " warning left")
-            warnings -=1
+        if not str.isalpha(user_input):
+            print("Oops! That is not a valid letter.")
+            if warnings_remaining < 0:
+                print("You have no warnings left so you lose one guess: ")
+                guesses_remaining -= 1
+            else:
+                print("You have " + str(warnings_remaining) + " warning left")
+                warnings_remaining -= 1
             continue
 
-        #case 2. is already guessed
+        # case 2. is already guessed
         if is_word_guessed(user_input, letters_guessed):
             print("The letter already guessed")
-            print("You have" + str(warnings) + " warning left")
-            warnings -=1
+            if warnings_remaining < 0:
+                print("You have no warnings left so you lose one guess: ")
+                guesses_remaining -= 1
+            else:
+                print("You have " + str(warnings_remaining) + " warning left: ")
+                warnings_remaining -= 1
             continue
-        #When all the condition is ok, append the input to letters_guessed list
+        # When all the condition is ok, append the input to letters_guessed list
 
-        ''' 
-        check alphabet whether is vowel or not.
-        '''
+        # turn into lower case
+        user_input = user_input.lower()
+        print(user_input)
+        # as the input is validated, put it into list
         letters_guessed.append(user_input)
+        # and show the available letters
+        print("Available letters: " + get_available_letters(letters_guessed))
 
+        '''
+        check `is word correct`
+        if correct, guess as it is. otherwise lose guess depends on vowel or not
+        '''
+        if is_word_correct(user_input, secret_word):
+            print("Good guess: ")
+        else:
+            print("Oops! That letter is not in my word: ")
+            # check vowel
+            # is vowel? -2 guess
+            if user_input in ("a", "e", "i", "o", "u"):
+                guesses_remaining -= 2
+            # else -1 guess
+            else:
+                guesses_remaining -= 1
 
+        '''
+        show the result
+        '''
+        print(get_guessed_word(secret_word, letters_guessed))
+        print("-----------------")
 
-        #
         # # if the word is guessed, guesscount remains as it is otherwise -1
         # letters_guessed.append(user_input)
         # if is_word_guessed(secret_word, letters_guessed):
