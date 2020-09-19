@@ -271,7 +271,17 @@ Your total score for this game is: 21
 3. 없다면 `return False`
 4. 코드 흐름상 이미 사용된 문자인지 걸러내는 과정이 있기 때문에 바로 비교하면 된다.
 
-### 게임 예시
+
+
+#### win_or_lose(guessed_words)
+
+> 게임의 승패를 결정한다. 
+
+1. 지금까지 추정한 단어를 받는다 `app_ _ e` (`apple`)
+2. 각 문자를 확인한다
+3. 만약 모든 문자가 알파벳이라면, 이긴것 `True` 아니면 `False`로 한다.
+
+### H) 게임 예시
 
 최대한 보기와 비슷하게 할 것!
 
@@ -367,7 +377,7 @@ You have 2 guesses left
 Available Letters: defghijklmnopqrstuvwxyz 
 Please guess a letter: 2
      Oops! That is not a valid letter. You have 2 warnings left: _ _ _ _  
-     ­­­­­­­­­­­ 
+-----------  
 You have 2 guesses left 
 Available Letters: defghijklmnopqrstuvwxyz 
 Please guess a letter: d

@@ -119,6 +119,13 @@ def is_word_correct(user_input, secret_word):
             return True
     return False
 
+def win_or_lose(guessed_words):
+    i = 1
+    for char in guessed_words:
+        i *= int(str.isalpha(char))
+        if i != 1:
+            return False
+    return True
 
 def hangman(secret_word):
     '''
@@ -165,6 +172,7 @@ def hangman(secret_word):
 
         # validate input
         user_input = input("Please guess a letter: ")
+
         # case 1. is alphabet
         if not str.isalpha(user_input):
             print("Oops! That is not a valid letter.")
@@ -186,7 +194,6 @@ def hangman(secret_word):
                 print("You have " + str(warnings_remaining) + " warning left: ")
                 warnings_remaining -= 1
             continue
-        # When all the condition is ok, append the input to letters_guessed list
 
         # turn into lower case
         user_input = user_input.lower()
@@ -215,8 +222,20 @@ def hangman(secret_word):
         '''
         show the result
         '''
-        print(get_guessed_word(secret_word, letters_guessed))
+        guessed_words = get_guessed_word(secret_word, letters_guessed)
+        print(guessed_words)
         print("-----------------")
+
+        '''
+        Win or lose
+        '''
+        if win_or_lose(guessed_words):
+            print("Congratulations, you won!")
+            print("Your total score for this game is: " + str(guesses_remaining
+                                                              *len(''.join(set(guessed_words)))))
+            break
+        else:
+            print("Sorry, you ran out of guesses. The word was " + secret_word + ".")
 
         # # if the word is guessed, guesscount remains as it is otherwise -1
         # letters_guessed.append(user_input)
