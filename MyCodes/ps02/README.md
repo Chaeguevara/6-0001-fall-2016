@@ -275,7 +275,7 @@ Your total score for this game is: 21
 
 #### win_or_lose(guessed_words)
 
-> 게임의 승패를 결정한다. 
+>  게임의 승패를 결정한다. 
 
 1. 지금까지 추정한 단어를 받는다 `app_ _ e` (`apple`)
 2. 각 문자를 확인한다
@@ -407,3 +407,78 @@ Sorry, you ran out of guesses. The word was else.
 
 
 ## 문제 4 / 파트 3 : 힌트와 함께
+
+> Hangman_with_hints 을 하기위해 두가지 function을 작성한다
+
+### A) 현재 추측한 단어와 매칭`match_with_gaps(my_word,other_word)`
+
+
+
+> myword = t_ _ t
+>
+> other_word =tact
+
+길이가 같거나, 각 위치의 알파벳이 동일 하면 true 아니면 false
+
+예시)
+
+```python
+>>> match_with_gaps("te_ t", "tact")
+False
+>>> match_with_gaps("a_ _ le", "banana")
+False
+>>> match_with_gaps("a_ _ le", "apple")
+True
+>>> match_with_gaps("a_ ple", "apple")
+False
+```
+
+힌트) `strip()`을 사용하여 빈공간 없앨 수 있음.
+
+### B) 가능한 모든 단어 `show_possible_matches(my_word)`
+
+> `wordlist`에서 모든 가능한 단어를 뽑아냄
+
+예시)
+
+```python
+>>> show_possible_matches("t_ _ t")
+tact tart taut teat tent test text that tilt tint toot tort tout trot tuft twit
+>>> show_possible_matches("abbbb_ ")
+No matches found
+>>> show_possible_matches("a_ pl_ ")
+ample amply
+```
+
+### C) Hangman with hints
+
+``` pytho
+Loading word list from file...
+55900 words loaded.
+Welcome to the game Hangman!
+I am thinking of a word that is 5 letters long.
+--------
+You have 6 guesses left.
+Available letters: abcdefghijklmnopqrstuvwxyz
+Please guess a letter: a
+Good guess: a_ _ _ _
+--------
+You have 6 guesses left.
+Available letters: bcdefghijklmnopqrstuvwxyz
+Please guess a letter: l
+Good guess: a_ _ l_
+--------
+You have 6 guesses left.
+Available letters: bcdefghijkmnopqrstuvwxyz
+Please guess a letter: *
+Possible word matches are:
+addle adult agile aisle amble ample amply amyls angle ankle appl e
+apply aptly arils atilt
+--------
+You have 6 guesses left.
+Available letters: bcdefghijkmnopqrstuvwxyz
+Please guess a letter: e
+Good guess: a_ _ le
+--------
+```
+

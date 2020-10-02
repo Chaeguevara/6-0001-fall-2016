@@ -173,6 +173,11 @@ def hangman(secret_word):
         # validate input
         user_input = input("Please guess a letter: ")
 
+        # activate hint
+        if user_input =="*":
+            show_possible_matches(guessed_words)
+            continue
+
         # case 1. is alphabet
         if not str.isalpha(user_input):
             print("Oops! That is not a valid letter.")
@@ -234,7 +239,7 @@ def hangman(secret_word):
             print("Your total score for this game is: " + str(guesses_remaining
                                                               *len(''.join(set(guessed_words)))))
             break
-        elif(guesses_remaining==1):
+        elif(guesses_remaining==0):
             print("Sorry, you ran out of guesses. The word was " + secret_word + ".")
 
         # # if the word is guessed, guesscount remains as it is otherwise -1
@@ -271,24 +276,23 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    my_word = str(my_word)
+
     other_word = str(other_word)
     result = None
-    my_word.replace(" ","")
-    if len(my_word) != other_word:
+    my_word=my_word.replace(" ","")
+    if len(my_word) != len(other_word):
         return False
     match_bool = 1
-    for i,char in my_word:
+    for i,char in enumerate(my_word):
         if str.isalpha(char):
             if char == my_word[i]:
                 match_bool *=1
             else:
-                return False;
+                return False
     if match_bool ==1:
         result = True
-
     return result
-
+print(match_with_gaps("a_ _ le","apple"))
 
 def show_possible_matches(my_word):
     '''
@@ -300,8 +304,12 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    match_list =[]
+    for other_word in wordlist:
+        if match_with_gaps(my_word,other_word):
+            match_list.append(my_word)
+    print(match_list)
+    return None
 
 
 def hangman_with_hints(secret_word):
@@ -342,7 +350,7 @@ def hangman_with_hints(secret_word):
 
 
 if __name__ == "__main__":
-    # pass
+    pass
 
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
@@ -355,5 +363,5 @@ if __name__ == "__main__":
 # To test part 3 re-comment out the above lines and
 # uncomment the following two lines.
 
-    secret_word = choose_word(wordlist)
-    hangman_with_hints(secret_word)
+    #secret_word = choose_word(wordlist)
+    #hangman_with_hints(secret_word)
