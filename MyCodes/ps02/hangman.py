@@ -119,6 +119,7 @@ def is_word_correct(user_input, secret_word):
             return True
     return False
 
+
 def win_or_lose(guessed_words):
     i = 1
     for char in guessed_words:
@@ -126,6 +127,7 @@ def win_or_lose(guessed_words):
     if i != 1:
         return False
     return True
+
 
 def hangman(secret_word):
     '''
@@ -173,13 +175,8 @@ def hangman(secret_word):
         # validate input
         user_input = input("Please guess a letter: ")
 
-        # activate hint
-        if user_input =="*":
-            show_possible_matches(guessed_words)
-            continue
-
         # case 1. is alphabet
-        if not str.isalpha(user_input):
+        if not (str.isalpha(user_input) or user_input == "*"):
             print("Oops! That is not a valid letter.")
             if warnings_remaining < 0:
                 print("You have no warnings left so you lose one guess: ")
@@ -204,7 +201,8 @@ def hangman(secret_word):
         user_input = user_input.lower()
         print(user_input)
         # as the input is validated, put it into list
-        letters_guessed.append(user_input)
+        if user_input != "*":
+            letters_guessed.append(user_input)
         # and show the available letters
         print("Available letters: " + get_available_letters(letters_guessed))
 
@@ -214,7 +212,7 @@ def hangman(secret_word):
         '''
         if is_word_correct(user_input, secret_word):
             print("Good guess: ")
-        else:
+        elif user_input != "*":
             print("Oops! That letter is not in my word: ")
             # check vowel
             # is vowel? -2 guess
@@ -231,29 +229,19 @@ def hangman(secret_word):
         print(guessed_words)
         print("-----------------")
 
+        #activate hint
+        if (user_input == "*") and (len(guessed_words) > 0):
+            show_possible_matches(guessed_words)
         '''
         Win or lose
         '''
         if win_or_lose(guessed_words):
             print("Congratulations, you won!")
             print("Your total score for this game is: " + str(guesses_remaining
-                                                              *len(''.join(set(guessed_words)))))
+                                                              * len(''.join(set(guessed_words)))))
             break
-        elif(guesses_remaining==0):
+        elif guesses_remaining == 0:
             print("Sorry, you ran out of guesses. The word was " + secret_word + ".")
-
-        # # if the word is guessed, guesscount remains as it is otherwise -1
-        # letters_guessed.append(user_input)
-        # if is_word_guessed(secret_word, letters_guessed):
-        #     guesscount = guesscount
-        # else:
-        #     guesscount -= 1
-        # # print the remaining count of guesses
-        # print("You have "+ str(guesscount)+" guesses left")
-        # # shows the available letters
-        # print(letters_guessed)
-        # print("Available letters: " + get_available_letters(letters_guessed))
-        # print(get_guessed_word(secret_word, letters_guessed)+ "\n")
 
     return None
 
@@ -279,20 +267,32 @@ def match_with_gaps(my_word, other_word):
 
     other_word = str(other_word)
     result = None
-    my_word=my_word.replace(" ","")
+    my_word = my_word.replace(" ", "")
     if len(my_word) != len(other_word):
         return False
     match_bool = 1
-    for i,char in enumerate(my_word):
+    for i, char in enumerate(list(set(my_word))):
         if str.isalpha(char):
-            if char == my_word[i]:
-                match_bool *=1
+            count1 = 0
+            count2 = 0
+            for j, char1 in enumerate(my_word):
+                if char == char1:
+                    count1 += 1
+                if char == other_word[j]:
+                    count2 += 1
+            if count1 != count2:
+                return False
+
+    for i, char in enumerate(my_word):
+        if str.isalpha(char):
+            if char == other_word[i]:
+                match_bool *= 1
             else:
                 return False
-    if match_bool ==1:
+    if match_bool == 1:
         result = True
     return result
-print(match_with_gaps("a_ _ le","apple"))
+
 
 def show_possible_matches(my_word):
     '''
@@ -304,10 +304,10 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    match_list =[]
+    match_list = []
     for other_word in wordlist:
-        if match_with_gaps(my_word,other_word):
-            match_list.append(my_word)
+        if match_with_gaps(my_word, other_word):
+            match_list.append(other_word)
     print(match_list)
     return None
 
@@ -358,10 +358,10 @@ if __name__ == "__main__":
     # secret_word = choose_word(wordlist)
     # hangman(secret_word)
 
-###############
+    ###############
 
-# To test part 3 re-comment out the above lines and
-# uncomment the following two lines.
+    # To test part 3 re-comment out the above lines and
+    # uncomment the following two lines.
 
-    #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
