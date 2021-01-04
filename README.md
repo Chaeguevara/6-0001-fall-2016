@@ -211,3 +211,96 @@ print(h(x))
 www.pythontutor.com
 
 요지는 local scope에서 global scope의 값을 가져올 수는 있지만 update는 할 수 없음.
+
+
+
+# Lecture 5
+
+> Tuples, List, Aliasing, Mutability, Cloning
+
+
+
+## 2가지 새로운 데이터 타입
+
+> 튜플과 리스트
+
+
+
+## Tuple?
+
+Sequence of something. Sequence of anything.
+
+여러가지를 담을 수 있다.
+
+바꿀 수 없음
+
+### 만드는 방법
+
+te = ()
+
+t = (2,"mit",3)
+
+t[0] -> 2
+
+(2,"mit",3) + (5,6)  -> (2,"mit",3,5,6) 
+
+t[1:2] -> ("mit",)  (,로 끝나는 것은 하나의 element를 가진 tuple 이라는 뜻)
+
+t[1:3] -> ("mit",3)
+
+len(t) -> 3
+
+t[1] = 4 ->에러가 생김. 바꿀 수 없음. **immutable**
+
+
+
+### 왜 튜플을 사용하는가?
+
+#### 어떤 값을 swap 할때
+
+```python
+temp = x
+x = y
+y = temp
+```
+
+```python
+(x,y) = (y,x)
+```
+
+
+
+#### Function에서 여러 값을 return 할떄
+
+```python
+def quotient_and_remainder(x, y):
+    q = x //y
+    r = x % y
+    return (q, r)
+
+(quot, rem) = quotient_and_remainder(4,5)
+-> quot = 0, rem = 4
+```
+
+
+
+### 튜플 다루기
+
+
+
+pre-condition: aTuple:((**ints**,*strings*),(**ints**,*strings*),(**ints**,*strings*))
+
+```python
+def get_data(aTuple):
+    nums = ()
+    words = ()
+    for t in aTuple:
+        nums = nums + (t[0],)
+        if t[1] not in words:
+            words = words + (t[1],)
+    min_n = min(nums)
+    max_n = max(nums)
+    unique_words = len(words)
+    return (min_n,max_n,unique_words)
+```
+
