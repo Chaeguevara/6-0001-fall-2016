@@ -286,8 +286,6 @@ def quotient_and_remainder(x, y):
 
 ### 튜플 다루기
 
-
-
 pre-condition: aTuple:((**ints**,*strings*),(**ints**,*strings*),(**ints**,*strings*))
 
 ```python
@@ -304,3 +302,179 @@ def get_data(aTuple):
     return (min_n,max_n,unique_words)
 ```
 
+
+
+### 예제
+
+> 테일러 스위프트
+
+```python
+tswift=((2014,"Katy"),
+       (2014,"Harry"),
+       (2012,"Jake"),
+       (2010,"Tayler"),
+       (2008,"Joe"))
+(min_year, max_year, num_people) = get_data(tswift)
+print("From", min_year, "to", max_year,\
+     "Taylor Swift wrote songs about", num_people, people!)
+
+> From 2008 to 2014 Taylor Swift wrote songs about 5 people!
+```
+
+
+
+## List
+
+> Mutable []
+
+
+
+```python
+a_list = []
+
+L = [2, 'a', 4, [1,2]]
+```
+
+튜플과 String과 비슷하게 루프 가능
+
+
+
+### Changing Element
+
+```python
+L = [2, 1, 5]
+L[1] = 3
+> L = [2, 3, 5]
+```
+
+
+
+### Iternation
+
+```python
+total = 0
+for i in range(len(L)):
+	total += L[i]
+    print total
+    
+total = 0
+for i in L:
+	total += i
+	print total
+```
+
+
+
+### OPERATIONS ON LISTS - ADD
+
+ L.append(element)
+
+```python
+L = [2,1,3]
+L.append(5) -> L is now [2,1,3,5]
+```
+
+`.`을 통해 기능을 부른다.
+
+
+
+```python
+L1 = [2,1,3]
+L2 = [4,5,6]
+L3 = L1 + L2 -> L3 is [2,1,3,4,5,6]
+				L1, L2 unchanged
+L1.extend([0,6]) -> mutated L1 to [2,1,3,0,6]
+```
+
+
+
+### OPERATIONS ON LISTS - REMOVE
+
+delete element at a specific index with del(L[index])
+
+ remove element at end of list with L.pop(), returns the removed element
+
+remove a specific element with L.remove(element)
+
+```python
+L = [2,1,3,6,3,7,0] # do below in order
+L.remove(2) -> mutates L = [1,3,6,3,7,0]
+L.remove(3) -> mutates L = [1,6,3,7,0] 
+del(L[1]) -> mutates L = [1,3,7,0]
+L.pop() -> returns 0 and mutates L = [1,3,7]
+```
+
+
+
+### CONVERT LISTS TO STRINGS AND BACK
+
+```python
+s = "I<3 cs"
+list(s) -> returns ['I','<','3',' ','c','s']
+s.split('<') -> returns ['I', '3 cs']
+L = ['a','b','c'] -> L is a list
+''.join(L) -> returns "abc"
+'_'.join(L) -> returns "a_b_c"
+```
+
+
+
+### OTHER LIST OPERATIONS
+
+```python
+L=[9,6,0,3]
+sorted(L) -> returns sorted list, does not mutate L
+L.sort() -> mutates L=[0,3,6,9]
+L.reverse() -> mutates L=[9,6,3,0]
+```
+
+
+
+### ALIASES
+
+hot is an alias for warm – changing one changes the other!
+
+append() has a side effect
+
+![image-20210109142358422](md-images/image-20210109142358422.png)
+
+### CLONING A LIST
+
+`chill = cool[:]`
+
+![image-20210109142623197](md-images/image-20210109142623197.png)
+
+### SORTING LISTS
+
+`.sort()` Mutate -> return nothing
+
+`.sorted()` Only return, no mutate
+
+![image-20210109142805473](md-images/image-20210109142805473.png)
+
+### LISTS OF LISTS OF LISTS OF….
+
+
+
+### MUTATION AND ITERATION Try this in Python Tutor!
+
+
+
+```python
+def remove_dups(L1, L2):
+	for e in L1:
+		if e in L2:
+			L1.remove(e)
+
+def remove_dups(L1, L2):
+	L1_copy = L1[:]
+    for e in L1_copy:
+        if e in L2:
+            L1.remove(e)
+            
+L1 = [1, 2, 3, 4]
+L2 = [1, 2, 5, 6]
+remove_dups(L1, L2)
+```
+
+아래의 방법으로 해야한다. 왜냐하면 위의 방법은 리스트를 지움으로, 인덱스가 흐트러진다.
