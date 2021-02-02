@@ -91,8 +91,30 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
+    # turn into lowercase
+    newWord = word.lower()
+
+    result = 0
+    first = 0
+    second = 0
+
+    for item in SCRABBLE_LETTER_VALUES.keys():
+        for char in newWord:
+            if item == char:
+                first += SCRABBLE_LETTER_VALUES[item]
+    if (7*len(newWord)-3*(n-len(newWord))) > 1:
+        second = 7*len(newWord)-3*(n-len(newWord))
+    else:
+        second = 1
     
-    pass  # TO DO... Remove this line when you implement this function
+    result = first*second
+
+    
+
+    
+
+    # get the dictionary
+    return result  # TO DO... Remove this line when you implement this function
 
 #
 # Make sure you understand how this function works and what it does!
