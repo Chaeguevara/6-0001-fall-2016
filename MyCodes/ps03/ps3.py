@@ -109,10 +109,6 @@ def get_word_score(word, n):
     
     result = first*second
 
-    
-
-    
-
     # get the dictionary
     return result  # TO DO... Remove this line when you implement this function
 
@@ -189,8 +185,19 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-
-    pass  # TO DO... Remove this line when you implement this function
+    newWord = word.lower()
+    new_hand = hand.copy()
+    for c in newWord:
+        try:
+            if hand[c] > 0:
+                new_hand[c] -= 1
+                print(c)
+                # print(new_hand[c])
+            else:
+                del new_hand[c]
+        except:
+            print('error')
+    return new_hand
 
 #
 # Problem #3: Test word validity
