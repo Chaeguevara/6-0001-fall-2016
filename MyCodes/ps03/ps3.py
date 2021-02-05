@@ -189,11 +189,9 @@ def update_hand(hand, word):
     new_hand = hand.copy()
     for c in newWord:
         try:
-            if hand[c] > 0:
+            if new_hand[c] > 0:
                 new_hand[c] -= 1
-                print(c)
-                # print(new_hand[c])
-            else:
+            if new_hand[c] == 0:
                 del new_hand[c]
         except:
             print('error')
@@ -213,8 +211,40 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    Result = 1
+    new_word = word.lower()
+    new_hand = hand.copy()
+    
+    #Test whether word exists in list or not
+    for i,word_in_list in enumerate(word_list):
+        if len(new_word)==len(word_in_list):
+            test = len(new_word)
+            for i,c in enumerate(new_word):
+                if c =='*' and (word_in_list[i] not in VOWELS):
+                    return False
+                if (c == '*' ) or (c == word_in_list[i]):
+                    test -=1
+                else:
+                    break
+            if test == 0:
+                break
+        elif i == len(word_list)-1:
+            return False
+        else:
+            pass
 
-    pass  # TO DO... Remove this line when you implement this function
+    #If the character of the word doesn't exists in hand, return 0
+    for c in new_word:
+        try:
+            if new_hand[c] > 0:
+                new_hand[c] -= 1
+                print(c,new_hand[c])
+            if new_hand[c] == 0:
+                del new_hand[c]
+        except:
+            Result = 0
+    
+    return bool(Result)  # TO DO... Remove this line when you implement this function
 
 #
 # Problem #5: Playing a hand

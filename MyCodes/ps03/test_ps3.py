@@ -54,7 +54,7 @@ def test_update_hand():
     # test 2
     handOrig = {'e':1, 'v':2, 'n':1, 'i':1, 'l':2}
     handCopy = handOrig.copy()
-    word = "Evil"
+    word = "Evil1"
 
     hand2 = update_hand(handCopy, word)
     expected_hand1 = {'v':1, 'n':1, 'l':1}
