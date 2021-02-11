@@ -226,15 +226,16 @@ def is_valid_word(word, hand, word_list):
     for i,word_in_list in enumerate(word_list):
         if len(new_word)==len(word_in_list):
             test = len(new_word)
-            for i,c in enumerate(new_word):
-                if c =='*' and (word_in_list[i] not in VOWELS):
+            for j,c in enumerate(new_word):
+                if c =='*' and (word_in_list[j] not in VOWELS):
                     return False
-                if (c == '*' ) or (c == word_in_list[i]):
+                if (c == '*' ) or (c == word_in_list[j]):
                     test -=1
                 else:
                     break
             if test == 0:
                 break
+        # if word is not in word_list return false
         elif i == len(word_list)-1:
             return False
         else:
@@ -263,8 +264,10 @@ def calculate_handlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    i = 0
+    for letter in hand.keys():
+        i += hand[letter]
+    return i
 
 def play_hand(hand, word_list):
 
