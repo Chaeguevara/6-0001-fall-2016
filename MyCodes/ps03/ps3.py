@@ -377,8 +377,26 @@ def substitute_hand(hand, letter):
     letter: string
     returns: dictionary (string -> int)
     """
+    # copy the dictionary so that not to mutate and initialize parameter
+    newHand = hand.copy()
+    letterList = VOWELS + CONSONANTS
     
-    pass  # TO DO... Remove this line when you implement this function
+    #convert the letter into lowercases just in case
+    newLetter = letter.lower()
+    # if the letter is in hand, keep going alternating
+    try:
+        newHand[newLetter]
+        #pick a letter randomly from consonant and vowel
+        
+         
+        # if the chosen one is not in hand(or newHand)
+            #construct newHand   
+    # else throw some message and call the function again
+    except KeyError:
+        print("The letter is not in hand, try again")
+        substitute_hand(hand, letter)
+
+    return newHand
        
     
 def play_game(word_list):
