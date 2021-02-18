@@ -304,7 +304,7 @@ def play_hand(hand, word_list):
     # Keep track of the total score
     total_score = 0
     
-    # As long as there are still letters left in the hand:
+    # As long as there are letters in the hand:
     while(calculate_handlen(hand)) > 0:
         # Display the hand
         display_hand(hand)
@@ -315,22 +315,22 @@ def play_hand(hand, word_list):
             # End the game (break out of the loop)
             break
             
-        # Otherwise (the input is not two exclamation points):
+        # go on
 
         # If the word is valid:
         if is_valid_word(user_input,hand,word_list):
             # Tell the user how many points the word earned,
             sub_score = get_word_score(user_input, calculate_handlen(hand))
             print('"'+user_input+'"',"earned",str(sub_score),"points.")
-            # and the updated total score
+            # update the total score
             total_score += sub_score
 
         # Otherwise (the word is not valid):
         else:
             # Reject invalid word (print a message)
-            print("That tis not a valid word. Please choose another word.")
+            print("That is not a valid word. Please choose another word.")
                 
-        # update the user's hand by removing the letters of their inputted word
+        # update hand: remove valid 
         hand = update_hand(hand,user_input)
 
             
@@ -386,11 +386,15 @@ def substitute_hand(hand, letter):
     # if the letter is in hand, keep going alternating
     try:
         newHand[newLetter]
-        #pick a letter randomly from consonant and vowel
-        
-         
-        # if the chosen one is not in hand(or newHand)
-            #construct newHand   
+        #From the letterlist, delete the keys in dictionary
+        for key in newHand:
+            letterList = letterList.replace(key,"")
+
+        #Replace the key with randomly chosen character
+        random_character = random.choice(letterList)
+        newHand[random_character] = newHand[newLetter]
+
+               
     # else throw some message and call the function again
     except KeyError:
         print("The letter is not in hand, try again")
