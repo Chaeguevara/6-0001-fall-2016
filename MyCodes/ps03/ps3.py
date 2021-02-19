@@ -335,10 +335,11 @@ def play_hand(hand, word_list):
 
             
 
-    # Game is over (user entered '!!' or ran out of letters),
+    # Game finished by using all words show this message
     if calculate_handlen(hand) == 0:
         print("Ran out of letters.")
-    # so tell user the total score
+    
+    #tell user the total score
     print("Total:",str(total_score), "points")
 
     # Return the total score as result of function
@@ -378,6 +379,7 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     # copy the dictionary so that not to mutate and initialize parameter
+    assert len(letter) == 1, "You need to type only one letter"
     newHand = hand.copy()
     letterList = VOWELS + CONSONANTS
     
@@ -386,7 +388,7 @@ def substitute_hand(hand, letter):
     # if the letter is in hand, keep going alternating
     try:
         newHand[newLetter]
-        #From the letterlist, delete the keys in dictionary
+        #From the letterlist, delete the letters in dictionary
         for key in newHand:
             letterList = letterList.replace(key,"")
 
@@ -397,7 +399,7 @@ def substitute_hand(hand, letter):
                
     # else throw some message and call the function again
     except KeyError:
-        print("The letter is not in hand, try again")
+        letter = input("The letter is not in hand. try other one: ")
         substitute_hand(hand, letter)
 
     return newHand
@@ -433,8 +435,31 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
+    n = 0
+    #Let user type the total number of hands & assert it as int
+    try:
+       n = int(input("Enter total number of hands: "))
+    except ValueError:
+        print("\nPlease type proper number")
+        play_game(word_list)
+
+    # create & display hand 
+    hand = deal_hand(n)
+    display_hand(hand)
+
+    # give a chance to replace hand
+    sub_chance = input("Would you like to substitute a letter? ")
+    sub_chance = sub_chance.lower()
     
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
+    #if the user want to replace hand
+    if sub_chance in["yes","y"]:
+        # get the letter
+        sub_letter = input("Which letter would you like to replace: ")
+        substitute_hand(hand,sub_letter)
+    # if no, pass
+    else:
+        pass
+
     
 
 
