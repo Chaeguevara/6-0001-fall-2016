@@ -207,6 +207,7 @@ def update_hand(hand, word):
 #
 # Problem #3: Test word validity
 #
+
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
@@ -456,10 +457,14 @@ def play_game(word_list):
         # get the letter
         sub_letter = input("Which letter would you like to replace: ")
         substitute_hand(hand,sub_letter)
-    # if no, pass
+    # if no or other letter, pass and start game
     else:
         pass
 
+    # Start game
+
+    # Play game
+    play_hand(hand, word_list)
     
 
 
