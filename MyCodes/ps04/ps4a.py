@@ -31,29 +31,29 @@ def get_permutations(sequence):
         permutations_list.append(sequence)
         return permutations_list
     
-    # if the length is 2, return 
-    if len(sequence) ==2:
-        permutations_list.append(sequence)
-        permutations_list.append(sequence[1]+sequence[1])
     # divide and conquer
     #get the first letter and the rest
     first_letter = sequence[0]
     new_sequence = sequence[1:]
 
-    # add the sequence to list
-    permutations_list.append(sequence)
-    # first letter is inserted into every between space of letters
-    # ex) abcd -> a/bcd -> b'a'cd, bc'a'd
-    for i in range (len(new_sequence)-1):
-        permutation = new_sequence[:i] + first_letter + new_sequence[i:]
-
-    # add the last
-    permutations_list.append(new_sequence+first_letter)
-
-    permutations_list.append(get_permutations(new_sequence))
+    # a -> a
+    # ab -> [a'b', 'b'a]
+    # abc -> ['c'ab, a'c'b, ab'c'], ['c'ba, b'c'a, ba'c']
+    # abcd -> ['d'cab, c'd'ab, ca'd'b, cab'd'],...
+    #permutation can be defined by putting first letter at every space in string
+    prev_result = get_permutations(new_sequence)
+    
+    #enumerate over all the sequece in list
+    for i,item in enumerate(prev_result):
+        # first 'a' + bcdef...
+        permutations_list.append(first_letter + item)
+        # now b'a'cd....,bc'a'd..... 
+        for j in range(1,len(item)):
+            permutations_list.append(item[:j]+first_letter+item[j:])
+        # bcdef....+'a'
+        permutations_list.append(item+first_letter)
 
     
-
 
     return permutations_list
 
@@ -63,6 +63,7 @@ if __name__ == '__main__':
    print('Input:', example_input)
    print('Expected Output:', ['abc', 'acb', 'bac', 'bca', 'cab', 'cba'])
    print('Actual Output:', get_permutations(example_input))
+   print('Size: ',len(get_permutations(example_input)))
     
 #    # Put three example test cases here (for your sanity, limit your inputs
 #    to be three characters or fewer as you will have n! permutations for a 
