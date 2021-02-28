@@ -110,6 +110,14 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        # initialize parameters
+        message = self.message_text.lower()
+        alpha_dictionary = {}
+
+        #create a dictionary for input text
+
+        #then shift
+
         pass  # delete this line and replace with your code here
 
     def apply_shift(self, shift):
