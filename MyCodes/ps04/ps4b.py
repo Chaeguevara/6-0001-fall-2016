@@ -112,11 +112,13 @@ class Message(object):
         '''
         # initialize parameters
         message = self.message_text.lower()
+        upper_cases = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        lower_cases = upper_cases.lower()
+
+        #Iterate over each letter
         alpha_dictionary = {}
-
-        #create a dictionary for input text
-
-        #then shift
+        for x in message:
+            alpha_dictionary[x]
 
         pass  # delete this line and replace with your code here
 
