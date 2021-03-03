@@ -115,12 +115,41 @@ class Message(object):
         upper_cases = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         lower_cases = upper_cases.lower()
 
-        #Iterate over each letter
+        # Iterate over each letter
         alpha_dictionary = {}
+        # put each letter as key and shifted letter as value
         for x in message:
-            alpha_dictionary[x]
+            # Set default value for test_case
+            test_case = lower_cases
+            # if the letter is upper case, shift in upper cases
+            if x.isupper() == True:
+                test_case = upper_cases
+            # else shift in lower cases
+            else:
+                pass
+            '''
+             determine the shift value
+             ex a,b,c,d,e,f
+                1,2,3,4,5,6
+             a,2(letter, shift) ->d(4)
+             d,5 -> c(3)
+             f,1 -> a(1)
+             the position value for the desired letter can be calculated as (current position index + shift value) % length of alphabet
+            '''
+            #calculate the new position
+            
+            #first get the current position
+            current_position = 0
+            for i,y in enumerate(test_case):
+                if x == y:
+                    current_position = i + 1
+                    break
+            new_position = (current_position + shift) % 26
 
-        pass  # delete this line and replace with your code here
+            # now get the new letter and build the dictionary
+            alpha_dictionary[x] = test_case[new_position]
+
+        return alpha_dictionary
 
     def apply_shift(self, shift):
         '''
