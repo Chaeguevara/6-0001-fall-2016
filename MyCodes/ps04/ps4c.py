@@ -116,7 +116,7 @@ class SubMessage(object):
         transpose_dict = {}
 
         # include upper and lower at once
-        for char, i in enumerate(vowels_permutation):
+        for i,char in enumerate(vowels_permutation):
             char = char.lower()
             # lower case
             transpose_dict[char] = VOWELS_LOWER[i]
@@ -157,7 +157,7 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass  # delete this line and replace with your code here
+        SubMessage.__init__(self,text)
 
     def decrypt_message(self):
         '''
@@ -177,6 +177,9 @@ class EncryptedSubMessage(SubMessage):
 
         Hint: use your function from Part 4A
         '''
+        perm_list = get_permutations(self.get_message_text())
+        print(perm_list)
+
         pass  # delete this line and replace with your code here
 
 
